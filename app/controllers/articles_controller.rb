@@ -14,7 +14,17 @@ class ArticlesController < ApplicationController
   
   
   def create
-    render plain: params[:article]
+    
+    @article = Article.new(article_params)
+    @article.save
+    redirect_to @article
+  end
+
+  private
+
+  # Only allow a list of trusted parameters through.
+  def article_params
+    params.require(:article).permit(:title, :description)
   end
   
 

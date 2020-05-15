@@ -11,7 +11,11 @@ class ArticlesController < ApplicationController
   def new
     @article = Article.new
   end
-  
+
+  def edit
+    @article = Article.find(params[:id])
+  end
+    
   
   def create
 
@@ -23,6 +27,18 @@ class ArticlesController < ApplicationController
       render 'new'
     end
   end
+
+  def update
+    @article = Article.find(params[:id])
+    if @article.update(article_params)
+      flash[:notice] = "Article was successfully updated."
+      #tha basic form to redirect is using path
+      redirect_to article_path
+    else
+      render 'edit'
+    end
+  end
+  
 
   private
 

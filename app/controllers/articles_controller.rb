@@ -22,6 +22,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     if @article.save
       flash[:notice] = "Article was successfully created."
+      #another way to redirect
       redirect_to @article
     else
       render 'new'
@@ -32,13 +33,18 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     if @article.update(article_params)
       flash[:notice] = "Article was successfully updated."
-      #tha basic form to redirect is using path
+      #the basic way to redirect is using prefixes
       redirect_to article_path
     else
       render 'edit'
     end
   end
-  
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    redirect_to articles_path
+  end
 
   private
 
@@ -47,5 +53,4 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :description)
   end
   
-
 end

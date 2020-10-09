@@ -20,7 +20,7 @@ class ArticlesController < ApplicationController
   
   def create
     @article = Article.new(article_params)
-    @article.user = User.last
+    @article.user = current_user
     if @article.save
       flash[:notice] = "Article was successfully created."
       #another way to redirect
@@ -53,7 +53,7 @@ class ArticlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:title, :description)
+      params.require(:article).permit(:title, :description, category_ids: [])
     end
     
     def require_same_user

@@ -3,9 +3,10 @@
 <div class="card mx-auto mt-4 w-50 shadow mb-5 bg-white rounded" style="width: 18rem;">
   <div class="card-body text-center">
     <div class="card-header font-italic">
-      <% if @article.user %>
-        by <%= link_to @article.user.username, @article.user %>
-      <% end %>
+      by <%= link_to @article.user.username, @article.user if @article.user %>
+      <% if @article.categories.any? %>
+        <div class="mt-2"><%= render @article.categories %></div>
+      <% end %> 
     </div>
     <div class="card-body">
       <div class="card-text text-left"><%= simple_format(@article.description) %></div>
